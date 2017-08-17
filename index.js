@@ -9,7 +9,7 @@ module.exports = function(S) {
   const path       = require('path'),
         _          = require('lodash'),
         browserify = require('browserify'),
-        UglifyJS   = require('uglify-js'),
+        Uglify     = require('uglify-es'),
         BbPromise  = require('bluebird'),
         fs         = BbPromise.promisifyAll(require("fs-extra"));
 
@@ -258,7 +258,7 @@ module.exports = function(S) {
               let result;
               
               try {
-                result = UglifyJS.minify(optimizedFile, uglyOptions);
+                result = Uglify.minify(optimizedFile, uglyOptions);
               } catch (e) {
                 console.error(`Error uglifying ${optimizedFile}`);
                 console.error(e);
