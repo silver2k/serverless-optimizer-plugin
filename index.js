@@ -258,15 +258,16 @@ module.exports = function(S) {
               let result;
               
               try {
-                result = Uglify.minify(optimizedFile, uglyOptions);
+                result = Uglify.minify({input : bundledBuf.toString("utf-8")}, uglyOptions);
               } catch (e) {
                 console.error(`Error uglifying ${optimizedFile}`);
                 console.error(e);
                 return reject(e);
               }
 
-              if (!result || !result.code) {
-                return reject(new SError(`Problem uglifying code ${optimizedFile}`));
+              if (result.error) {
+                console.log(result.error);
+                return reject(new Error(`Problem uglifying code ${optimizedFile}`));
               }
 
               S.utils.sDebug(`Writing minified file`);
